@@ -2,30 +2,75 @@ package com.adobe.codingchallenge.model;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-public class User {
+import javax.persistence.*;
+import java.io.Serializable;
+import java.math.BigInteger;
+import java.util.Date;
+
+@Entity
+@Table(name ="user")
+
+public class User implements Serializable {
 
 
-    @NotBlank(message = "user name should not be empty")
-    private String userId;
-    @NotBlank(message = "password cannot be empty")
-    private String pwd;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @Column(name="userId")
+    private BigInteger userId;
+    @Column(name="userEmail")
+    private String userEmail;
+    @Column(name="password")
+    private String password;
+    @Column(name="cretDt")
+    private Date cretDt;
+    @Column(name="inactvDt")
+    private Date inactvDt;
 
 
-    public String getUserId() {
-        return userId;
-    }
 
-    public void setUserId(String userId) {
+    public User(){
+
+}
+
+
+    public void setUserId(BigInteger userId) {
         this.userId = userId;
     }
 
-    public String getPwd() {
-        return pwd;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Date getCretDt() {
+        return cretDt;
+    }
+
+    public void setCretDt(Date cretDt) {
+        this.cretDt = cretDt;
+    }
+
+    public Date getInactvDt() {
+        return inactvDt;
+    }
+
+    public void setInactvDt(Date inactvDt) {
+        this.inactvDt = inactvDt;
     }
 
 
+    public BigInteger getUserId() {
+        return userId;
+    }
 }

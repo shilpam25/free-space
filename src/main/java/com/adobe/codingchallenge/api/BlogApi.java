@@ -1,5 +1,6 @@
 package com.adobe.codingchallenge.api;
 
+import com.adobe.codingchallenge.model.BlogReq;
 import com.adobe.codingchallenge.model.User;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,24 +14,23 @@ import javax.validation.Valid;
 public class BlogApi {
 
 
-    @RequestMapping(value = "/saveBlog", method ={RequestMethod.POST}, produces = "application/json")
-    public void saveBlog(@Valid @RequestBody User user){
-        System.out.println("This User" + user);
+//    @RequestMapping(value = "/saveBlog", method ={RequestMethod.POST}, produces = "application/json")
+//    public void saveBlog(@Valid @RequestBody BlogReq blog){
+//        System.out.println("This User" + blog);
+//
+//    }
+
+
+    @RequestMapping(value = "/publishBlog", method ={RequestMethod.POST}, produces = "application/json")
+    public void publishBlog(@Valid @RequestBody BlogReq blog){
+        System.out.println("This User" + blog);
 
     }
-
-
-    @RequestMapping(value = "/publishBlog", method ={RequestMethod.PUT}, produces = "application/json")
-    public void publishBlog(@Valid @RequestBody User user){
-        System.out.println("This User" + user);
-
-    }
-
 
     @RequestMapping(value = "/deleteBlog", method ={RequestMethod.DELETE}, produces = "application/json")
-    public void deleteBlog(@Valid @RequestBody User user){
-        System.out.println("This User" + user);
-
+    public void deleteBlog(@Valid @RequestBody int blogId){
+        System.out.println("This User" + blogId);
     }
+
 
 }
