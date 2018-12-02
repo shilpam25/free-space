@@ -2,7 +2,9 @@ package com.adobe.codingchallenge.model;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-public class CommentReq {
+import java.io.Serializable;
+
+public class CommentReq implements Serializable {
 
     @NotBlank(message = "Comment should not be empty")
     private String comment;

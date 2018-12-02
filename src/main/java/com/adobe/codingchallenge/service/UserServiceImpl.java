@@ -1,9 +1,12 @@
 package com.adobe.codingchallenge.service;
 
 import com.adobe.codingchallenge.model.UserReq;
+import com.adobe.codingchallenge.model.UserRes;
 import com.adobe.codingchallenge.repository.user.UserRepositoryDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.NoSuchElementException;
 
 
 @Component
@@ -14,23 +17,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void registerUser(UserReq user) {
-        if (userRepositoryDao.findUser(user)) {
-            System.out.println("Your are already registered");
-            return; }
+        if (userRepositoryDao.findUser(user) != null) {
+            throw new IllegalArgumentException("User is already registered");
+        }
         userRepositoryDao.createUser(user);
-        System.out.println("Your registration to Free space is successful");
-        System.out.println("Welcome:" + user.getUserId());
     }
 
     @Override
-    public void login(UserReq user) {
-        if(!userRepositoryDao.findUser(user))
-            return;
-        System.out.println("Login Successful");
+    public UserRes login(UserReq user) {
+        UserRes userRes;
+        userRes = userRepositoryDao.findUser(user);
+        if (userRes == null)
+            throw new NoSuchElementException("User not found");
+        return userRes;
 
     }
-
-
 
 
 }
