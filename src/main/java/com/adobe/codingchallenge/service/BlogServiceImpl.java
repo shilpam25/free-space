@@ -1,26 +1,35 @@
 package com.adobe.codingchallenge.service;
 
 import com.adobe.codingchallenge.model.Blog;
+import com.adobe.codingchallenge.model.BlogReq;
+import com.adobe.codingchallenge.repository.blog.BlogRepositoryDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
 public class BlogServiceImpl implements BlogService {
+    @Autowired
+    BlogRepositoryDao blogRepositoryDao;
+
     @Override
-    public Blog saveBlog(Blog blog){
+    public BlogReq saveBlog(BlogReq blog) {
         return null;
     }
+
     @Override
-    public void publishBlog(Blog blog){
+    public void publishBlog(BlogReq blog) {
 
     }
+
     @Override
-    public List<Blog> getBlogs(){
-      return null;
+    public List<BlogReq> getBlogs() {
+        return null;
     }
+
     @Override
-    public void deleteBlog(int blogId){
+    public void deleteBlog(int blogId) {
 
     }
 }

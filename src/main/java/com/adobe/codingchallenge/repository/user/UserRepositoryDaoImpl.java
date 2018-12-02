@@ -1,14 +1,11 @@
-package com.adobe.codingchallenge.repository;
+package com.adobe.codingchallenge.repository.user;
 
 import com.adobe.codingchallenge.model.User;
 import com.adobe.codingchallenge.model.UserReq;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 

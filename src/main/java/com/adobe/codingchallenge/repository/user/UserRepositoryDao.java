@@ -1,4 +1,4 @@
-package com.adobe.codingchallenge.repository;
+package com.adobe.codingchallenge.repository.user;
 
 import com.adobe.codingchallenge.model.User;
 import com.adobe.codingchallenge.model.UserReq;

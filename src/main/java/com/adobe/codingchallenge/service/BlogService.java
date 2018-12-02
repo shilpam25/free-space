@@ -1,12 +1,12 @@
 package com.adobe.codingchallenge.service;
 
-import com.adobe.codingchallenge.model.Blog;
+import com.adobe.codingchallenge.model.BlogReq;
 
 import java.util.List;
 
 public interface BlogService {
-    Blog saveBlog(Blog blog);
-    void publishBlog(Blog blog);
-    List<Blog> getBlogs();
+    BlogReq saveBlog(BlogReq blog);
+    void publishBlog(BlogReq blog);
+    List<BlogReq> getBlogs();
     void deleteBlog(int blogId);
 }

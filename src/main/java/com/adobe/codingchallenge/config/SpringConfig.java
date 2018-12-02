@@ -1,9 +1,12 @@
 package com.adobe.codingchallenge.config;
 
-import com.adobe.codingchallenge.repository.UserRepositoryDao;
-import com.adobe.codingchallenge.repository.UserRepositoryDaoImpl;
+import com.adobe.codingchallenge.repository.blog.BlogRepositoryDao;
+import com.adobe.codingchallenge.repository.blog.BlogRepositoryDaoImpl;
+import com.adobe.codingchallenge.repository.comment.CommentRepositoryDao;
+import com.adobe.codingchallenge.repository.comment.CommentRepositoryDaoImpl;
+import com.adobe.codingchallenge.repository.user.UserRepositoryDao;
+import com.adobe.codingchallenge.repository.user.UserRepositoryDaoImpl;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.*;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
@@ -57,6 +60,16 @@ return dataSource;
     @Bean
     public UserRepositoryDao getUserRepositoryDao(){
         return new UserRepositoryDaoImpl();
+    }
+
+    @Bean
+    public BlogRepositoryDao getBlogRepositoryDao(){
+        return new BlogRepositoryDaoImpl();
+    }
+
+    @Bean
+    public CommentRepositoryDao getCommentRepositoryDao(){
+        return new CommentRepositoryDaoImpl();
     }
 
 }

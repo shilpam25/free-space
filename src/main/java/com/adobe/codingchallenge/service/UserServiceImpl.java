@@ -1,7 +1,7 @@
 package com.adobe.codingchallenge.service;
 
 import com.adobe.codingchallenge.model.UserReq;
-import com.adobe.codingchallenge.repository.UserRepositoryDao;
+import com.adobe.codingchallenge.repository.user.UserRepositoryDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
