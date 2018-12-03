@@ -17,12 +17,16 @@ public class UserRepositoryDaoImpl implements UserRepositoryDao{
     UserRepository userRepository;
 
     @Override
-    public void createUser(UserReq usr){
+    public UserRes createUser(UserReq usr){
         User user = new User();
         user.setCretDt(new Date(System.currentTimeMillis()));
         user.setPassword(usr.getPwd());
         user.setUserEmail(usr.getUserEmail());
-        userRepository.save(user);
+        User userResult = userRepository.save(user);
+        UserRes userRes = new UserRes();
+        userRes.setUserId(userResult.getUserId().intValue());
+        userRes.setUserEmail(userResult.getUserEmail());
+        return userRes;
     }
 
     @Override

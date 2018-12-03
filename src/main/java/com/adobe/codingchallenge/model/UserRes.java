@@ -6,8 +6,18 @@ import java.io.Serializable;
 
 public class UserRes implements Serializable {
 
-    @NotBlank(message = "user Email should not be empty")
     private int userId;
+    private String userEmail;
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+
 
     public int getUserId() {
         return userId;

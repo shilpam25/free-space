@@ -9,8 +9,9 @@ import java.util.List;
 
 public interface UserService {
 
-    void registerUser(UserReq user);
-    UserRes login(UserReq user);
+    UserRes registerUser(UserReq user);
+    UserRes getUserDetails(UserReq user);
+    Boolean authenticate(UserReq user);
 
 
 

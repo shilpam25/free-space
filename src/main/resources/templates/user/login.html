@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout :: site-head">
+    <title>Login</title>
+</head>
+
+<body>
+
+<header th:replace="layout :: site-header" />
+
+<h1>Login in the Blog</h1>
+
+<form method="post"  th:object="${user}">
+    <div><label for="userEmail">UserEmail:</label></div>
+    <input id="userEmail" type="text" name="userEmail" th:value="*{userEmail}" />
+    <span class="formError" th:if="${#fields.hasErrors('userEmail')}"
+          th:errors="*{userEmail}">Invalid user Email</span>
+
+    <div><label for="password" th:value="*{pwd}">Password:</label></div>
+    <input id="password" type="password" name="pwd" th:value="*{pwd}" />
+    <span class="formError" th:if="${#fields.hasErrors('pwd')}"
+          th:errors="*{pwd}">Invalid password</span>
+
+    <div><input type="submit" value="Login"/>
+        <a href="register.html" th:href="@{/user/register}">[Go to Register]</a></div>
+</form>
+
+<footer th:replace="layout :: site-footer" />
+
+</body>
+
+</html>

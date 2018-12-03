@@ -16,21 +16,31 @@ public class UserServiceImpl implements UserService {
     UserRepositoryDao userRepositoryDao;
 
     @Override
-    public void registerUser(UserReq user) {
+    public UserRes registerUser(UserReq user) {
         if (userRepositoryDao.findUser(user) != null) {
             throw new IllegalArgumentException("User is already registered");
         }
-        userRepositoryDao.createUser(user);
+        UserRes userRes= userRepositoryDao.createUser(user);
+        return userRes;
     }
 
     @Override
-    public UserRes login(UserReq user) {
+    public UserRes getUserDetails(UserReq user) {
         UserRes userRes;
         userRes = userRepositoryDao.findUser(user);
         if (userRes == null)
             throw new NoSuchElementException("User not found");
         return userRes;
 
+    }
+
+    @Override
+    public Boolean authenticate(UserReq user){
+        UserRes userRes;
+        userRes = userRepositoryDao.findUser(user);
+        if (userRes == null)
+            return false;
+        return true;
     }
 
 

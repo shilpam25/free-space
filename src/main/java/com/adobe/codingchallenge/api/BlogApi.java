@@ -5,19 +5,20 @@ import com.adobe.codingchallenge.model.BlogRes;
 import com.adobe.codingchallenge.model.User;
 import com.adobe.codingchallenge.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
-@RestController
-@RequestMapping("/api/v1/post")
+@Controller
 public class BlogApi {
 @Autowired
     BlogService blogService;
 
     @RequestMapping(value = "/saveBlog", method ={RequestMethod.POST}, produces = "application/json")
-    public BlogRes saveBlog(@RequestParam(value = "userId") int userId, @Valid @RequestBody BlogReq blog){
+    public BlogRes saveBlog(@RequestParam(value = "userId") int userId, @Valid @RequestBody BlogReq blog, Model model){
         return blogService.saveBlog(blog, userId);
 
     }
