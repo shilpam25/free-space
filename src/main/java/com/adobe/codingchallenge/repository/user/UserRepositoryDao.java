@@ -7,4 +7,6 @@ import com.adobe.codingchallenge.model.UserRes;
 public interface UserRepositoryDao {
     UserRes createUser(UserReq usr);
     UserRes findUser(UserReq usr);
+    UserRes getUserDetails(int userId);
+
 }

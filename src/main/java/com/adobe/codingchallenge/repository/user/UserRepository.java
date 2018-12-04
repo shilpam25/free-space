@@ -10,5 +10,6 @@ public interface UserRepository extends CrudRepository<User, Long> {
     //User findByUserIdAAndInactvDtIsNull(Integer userId);
 
     List<User> findUserByUserEmail(String email);
+    User findUserByUserId(int userId);
 
 }

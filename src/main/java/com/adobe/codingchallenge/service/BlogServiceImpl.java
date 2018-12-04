@@ -28,7 +28,7 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public List<BlogRes> getBlogs() {
-        return blogRepositoryDao.retreiveAll();
+        return blogRepositoryDao.retreiveAll(); //TODO send only latest 10 for landing page
 
     }
 

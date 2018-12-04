@@ -10,7 +10,7 @@ public class CommentReq implements Serializable {
     private String comment;
     @NotBlank(message = "BlogID should not be empty")
     private int blogId;
-    @NotBlank(message = "UserID should not be empty")
+    @NotBlank(message = "UserId should not be empty")
     private int userId;
 
     public int getBlogId() {

@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class UserReq{
 
     @NotBlank(message = "user Email should not be empty")
-    //@Email
+    @Email
     private String userEmail;
     @NotBlank(message = "password cannot be empty")
     @Size(min=1, max=50)

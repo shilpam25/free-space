@@ -10,8 +10,8 @@ import java.util.List;
 public interface UserService {
 
     UserRes registerUser(UserReq user);
-    UserRes getUserDetails(UserReq user);
-    Boolean authenticate(UserReq user);
+    UserRes getUserDetails(int user);
+    Boolean checkUserExists(UserReq user);
 
 
 

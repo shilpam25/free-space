@@ -1,21 +1,28 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"><head th:fragment="site-head">
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="../static/css/styles.css" th:href="@{/css/styles.css}" />
-    <script src="../static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
-    <script src="../static/js/scripts.js" th:src="@{/js/scripts.js}"></script>
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{../static/css/style.css}" />
+    <script src="../static/js/jquery-3.3.1.min.js" th:src="@{../static/js/jquery-3.3.1.min.js}"></script>
+    <script src="../static/js/script.js" th:src="@{../static/js/script.js}"></script>
     <meta th:include="this :: head" th:remove="tag"/>
-</head><body><header th:fragment="site-header">
+</head>
+<body>
+<header th:fragment="site-header">
     <a href="index.html" th:href="@{/}"></a>
     <a href="index.html" th:href="@{/}">Home</a>
-    <a href="user/login.html" th:href="@{/user/login}">Login</a>
-    <a href="user/register.html" th:href="@{/user/register}">Register</a>
-    <a href="blog/postBlog.html" th:href="@{/blog/saveBlog}">Create Blog</a>
-    <div id="logged-in-info"> <span>Hello, <b>(user)</b></span>
-        <form method="post" th:action="@{/user/logout}">
-            <input type="submit" value="Logout"/>
-        </form>
+    <a href="user/login.html" th:href="@{/login}" style ="float: right">Login</a>
+    <a href="user/register.html" th:href="@{/register}" style="margin : 15px">Register</a>
+    <a href="blog/postBlog.html" th:href="@{/blog/saveBlog}">Blog</a>
+    <div id="logged-in-info">
+
+        <!--<form method="post" th:action="@{/logout}">-->
+            <!--<input type="submit" value="Logout"/>-->
+        <!--</form>-->
     </div>
-</header> <h1>Welcome</h1>
-<p>Welcome to FreeSpace Blog.</p> <footer th:fragment="site-footer">
-</footer></body></html>
+</header>
+<h1>Welcome</h1>
+<p>Welcome to FreeSpace Blog.</p>
+<footer th:fragment="site-footer">
+</footer>
+</body>
+</html>

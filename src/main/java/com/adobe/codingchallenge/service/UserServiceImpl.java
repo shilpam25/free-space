@@ -25,9 +25,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserRes getUserDetails(UserReq user) {
+    public UserRes getUserDetails(int userId) {
         UserRes userRes;
-        userRes = userRepositoryDao.findUser(user);
+
+        userRes = userRepositoryDao.getUserDetails(userId);
         if (userRes == null)
             throw new NoSuchElementException("User not found");
         return userRes;
@@ -35,7 +36,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean authenticate(UserReq user){
+    public Boolean checkUserExists(UserReq user){
         UserRes userRes;
         userRes = userRepositoryDao.findUser(user);
         if (userRes == null)

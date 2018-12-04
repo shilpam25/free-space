@@ -8,19 +8,22 @@
 <body>
 
 <header th:replace="layout :: site-header" />
+<div class="heading" id="heading" style="text-align:center">
 <h1>Welcome to FreeSpace!  </h1>
-<h4>Read. Write. Express.</h4>
-Now is: <b th:text="${execInfo.now.time}">date and time</b>
-
-<h2>Read recent blogs.</h2>
+<h2>Read. Write. Express.</h2>
+</div>
+<h3>Checkout recent blog's</h3>
 <main id ="blog">
     <article th:each="blog : ${latest10blogs}">
-        <h2 class="title" th:text="${blog.title}">Blog Title</h2>
-        <div class="date">
+        <span>
+
+            <a href="blog/blog-template.html" th:href="@{/blog/blogDetails}"><h4 class="blogTitle" style="display: inline-block" th:text="${blog.title}">Blog Title</h4></a>
+        <!--<p class="blogContent" th:utext="${blog.desc}">BLog content</p>-->
+        <div class="blogDate">
             <i>Posted on</i>
             <span th:text="${#dates.format(blog.cretDt, 'dd-MMM-yyyy')}">12-2-2018</span>
         </div>
-        <p class="content" th:utext="${blog.desc}">BLog content</p>
+        </span>
     </article>
 </main>
 

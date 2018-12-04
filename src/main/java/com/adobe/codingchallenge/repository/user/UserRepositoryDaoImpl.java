@@ -41,4 +41,16 @@ public class UserRepositoryDaoImpl implements UserRepositoryDao{
            return null;
         }
     }
+
+    @Override
+    public UserRes getUserDetails(int userId){
+        UserRes userRes = new UserRes();
+        User user = userRepository.findUserByUserId(userId);
+        if(user !=null){
+            userRes.setUserEmail(user.getUserEmail());
+            userRes.setUserId(user.getUserId().intValue());
+        return userRes;
+        }
+        return null;
+    }
 }
