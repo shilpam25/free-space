@@ -29,13 +29,11 @@ body>footer {
 
 
 #logged-in-info {
-    display: none;
     float: right;
     margin-top: 18px;
 }
 
 #logged-in-info form {
-    display: none;
     display: inline-block;
     margin-right: 10px;
 }

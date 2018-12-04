@@ -10,11 +10,10 @@
 <header>
     <a href="index.html" th:href="@{/}"></a>
     <a href="index.html" th:href="@{/}">Home</a>
-    <a href="user/register.html" th:href="@{/register}" style="margin : 15px">Register</a>
     <a href="blog/postBlog.html" th:href="@{/blog/saveBlog}">Blog</a>
 </header>
 
-<h1>Login in the Blog</h1>
+<h1>Already registered? Log in</h1>
 
 <form method="post"  th:object="${user}">
     <div><label for="userEmail">UserEmail:</label></div>
@@ -27,8 +26,8 @@
     <span class="formError" th:if="${#fields.hasErrors('pwd')}"
           th:errors="*{pwd}">Invalid password</span>
 
-    <div><input type="submit" value="Login" style = "margin: 15px; margin-left: 0px"/>
-        <a href="register.html" th:href="@{/user/register}" style = "font-size: small">[Go to Register]</a></div>
+    <div><input type="submit" value="Login" style = "margin-top: 15px"/>
+        <a href="user/register.html" th:href="@{/register}" style = "font-size: small">[Go to Register]</a></div>
 </form>
 
 <footer th:replace="layout :: site-footer" />
