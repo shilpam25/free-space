@@ -15,7 +15,15 @@ public class BlogReq implements Serializable {
     @NotBlank(message = "Description should not be empty")
     private String desc;
 
+    private int blogId;
 
+    public int getBlogId() {
+        return blogId;
+    }
+
+    public void setBlogId(int blogId) {
+        this.blogId = blogId;
+    }
 
     public String getTitle() {
         return title;

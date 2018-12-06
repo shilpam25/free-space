@@ -1,9 +1,6 @@
 package com.adobe.codingchallenge.repository.comment;
 
-import com.adobe.codingchallenge.model.Blog;
-import com.adobe.codingchallenge.model.BlogReq;
-import com.adobe.codingchallenge.model.Comment;
-import com.adobe.codingchallenge.model.CommentReq;
+import com.adobe.codingchallenge.model.*;
 import com.adobe.codingchallenge.repository.blog.BlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -20,18 +17,26 @@ public class CommentRepositoryDaoImpl implements CommentRepositoryDao {
     CommentRepository commentRepository;
 
     @Override
-    public void submitComment(CommentReq commentReq, int blogId, int userId){
+    public void submitComment(CommentReq commentReq){
         Comment comment = new Comment();
-        //user.setUserId(new BigInteger("1234"));
         comment.setCretDt(new Date(System.currentTimeMillis()));
         comment.setCommentDesc(commentReq.getComment());
-        comment.setBlogId(blogId);
-        comment.setUserId(userId);
+        comment.setBlogId(commentReq.getBlogId());
+        comment.setUserId(commentReq.getUserId());
         commentRepository.save(comment);
     }
 
     @Override
-    public List<CommentReq> retreiveAll(){
-        return null;
+    public List<CommentRes> retreiveAllByBlog(int blogId){
+        return commentRepository.findAllByBlogId(blogId);
+    }
+    public List<CommentRes> retreiveAllByUser(int userId){
+        return commentRepository.findAllByUserId(userId);
+    }
+    public List<CommentRes> retreiveAllByUserOnBlog(int userId, int blogId){
+        return commentRepository.findAllByUserIdAndBlogId(userId, blogId);
+    }
+    public  void deleteComment(long commentId){
+        commentRepository.delete(commentId);
     }
 }

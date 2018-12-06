@@ -24,7 +24,7 @@ public class UserRepositoryDaoImpl implements UserRepositoryDao{
         user.setUserEmail(usr.getUserEmail());
         User userResult = userRepository.save(user);
         UserRes userRes = new UserRes();
-        userRes.setUserId(userResult.getUserId().intValue());
+        userRes.setUserId(userResult.getUserId());
         userRes.setUserEmail(userResult.getUserEmail());
         return userRes;
     }
@@ -34,7 +34,7 @@ public class UserRepositoryDaoImpl implements UserRepositoryDao{
         List<User> user = userRepository.findUserByUserEmail(usr.getUserEmail());
         if (user.size()>0){
             UserRes userRes = new UserRes();
-            userRes.setUserId(user.get(0).getUserId().intValue());
+            userRes.setUserId(user.get(0).getUserId());
             return userRes;
         }
         else{
@@ -43,12 +43,12 @@ public class UserRepositoryDaoImpl implements UserRepositoryDao{
     }
 
     @Override
-    public UserRes getUserDetails(int userId){
+    public UserRes getUserDetails(long userId){
         UserRes userRes = new UserRes();
         User user = userRepository.findUserByUserId(userId);
         if(user !=null){
             userRes.setUserEmail(user.getUserEmail());
-            userRes.setUserId(user.getUserId().intValue());
+            userRes.setUserId(user.getUserId());
         return userRes;
         }
         return null;

@@ -25,7 +25,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserRes getUserDetails(int userId) {
+    public UserRes getUserDetails(UserReq user) {
+        UserRes userRes;
+
+        userRes = userRepositoryDao.findUser(user);
+        if (userRes == null)
+            throw new NoSuchElementException("User not found");
+        return userRes;
+
+    }
+
+    @Override
+    public UserRes getUserDetails(long userId) {
         UserRes userRes;
 
         userRes = userRepositoryDao.getUserDetails(userId);

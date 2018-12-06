@@ -1,6 +1,5 @@
 package com.adobe.codingchallenge.model;
 
-import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -8,7 +7,9 @@ import java.util.Date;
 @Entity
 @Table(name ="comment")
 public class Comment {
+    public Comment(){
 
+    }
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name="commentId")

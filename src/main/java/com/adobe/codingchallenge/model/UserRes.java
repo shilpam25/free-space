@@ -3,11 +3,14 @@ package com.adobe.codingchallenge.model;
 import org.hibernate.validator.constraints.NotBlank;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class UserRes implements Serializable {
 
-    private int userId;
+    private long userId;
     private String userEmail;
+    private List<Blog> blogList;
+
 
     public String getUserEmail() {
         return userEmail;
@@ -19,11 +22,11 @@ public class UserRes implements Serializable {
 
 
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 }

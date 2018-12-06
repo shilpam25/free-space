@@ -13,6 +13,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -27,72 +29,77 @@ public class UserApi {
 
     @RequestMapping("/")
     public String init(Model model) {
-        List<BlogRes> blogRes= blogService.getBlogs();
+        List<BlogRes> blogRes = blogService.getBlogs();
         model.addAttribute("latest10blogs", blogRes);
         return "index";
     }
 
     @ModelAttribute(value = "user")
-    public UserReq initUser()
-    {
+    public UserReq initUser() {
         return new UserReq();
     }
 
-    @RequestMapping(value = "/register", method ={RequestMethod.GET}, produces = "application/json")
-    public String registerUser(Model model){
+    @RequestMapping(value = "/register", method = {RequestMethod.GET}, produces = "application/json")
+    public String registerUser(Model model) {
         model.addAttribute("user", new UserReq());
         return "user/register";
     }
+
     // POST method to register user
-    @RequestMapping(value = "/register", method ={RequestMethod.POST}, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = "application/json")
-    public String registerUser(@Valid UserReq user,  BindingResult bindingResult, Model model){
+    @RequestMapping(value = "/register", method = {RequestMethod.POST}, consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, "application/json"}, produces = "application/json")
+    public String registerUser(@RequestBody @Valid UserReq user, BindingResult bindingResult, Model model) {
         model.addAttribute("user", new UserReq());
         if (bindingResult.hasErrors()) {
             return "user/login";
         }
-        if(userService.registerUser(user) !=null)
+        if (userService.registerUser(user) != null)
             return "redirect:/";
         return "user/register";
     }
 
     //POST method to login user
-    @RequestMapping(value = "/login", method =RequestMethod.GET, produces = "application/json")
-    public String loginUser(Model model){
+    @RequestMapping(value = "/login", method = RequestMethod.GET, produces = "application/json")
+    public String loginUser(Model model) {
         model.addAttribute("user", new UserReq());
+        model.addAttribute("userBlogList", new ArrayList<BlogRes>());
         return "user/login";
     }
 
 
     //POST method to login user
-    @RequestMapping(value = "/login", method =RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = "application/json")
-    public String loginUser(@Valid UserReq user, BindingResult bindingResult, Model model){
-        //model.addAttribute("user", new UserReq());
+    @RequestMapping(value = "/login", method = {RequestMethod.POST}, consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, "application/json"}, produces = "application/json")
+    public String loginUser(@RequestBody @Valid UserReq user, BindingResult bindingResult, Model model) {
+        model.addAttribute("user", new UserReq());
         if (bindingResult.hasErrors()) {
             return "user/login";
         }
-         if(userService.checkUserExists(user))
-         return "redirect:/";
-         return "user/login";
+        if (userService.checkUserExists(user)) {
+            List<BlogRes> userBlogList = blogService.getAllBlogByUser(userService.getUserDetails(user).getUserId());
+            model.addAttribute("userBlogList", userBlogList);
+            return "redirect:/";
+        }
+        return "user/login";
     }
 
 
     //GET method to fetch user details
-    @RequestMapping(value = "/user-details", method =RequestMethod.GET, produces = "application/json")
-    public UserRes userDetails(@RequestParam int userId){
+    @RequestMapping(value = "/user/{userId}", method = RequestMethod.GET, produces = "application/json")
+    public UserRes userDetails(@PathVariable @NotNull String userId) {
         UserRes userRes;
-        userRes = userService.getUserDetails(userId);
+        userRes = userService.getUserDetails((Long.parseLong(userId)));
         return userRes;
     }
 
-//TODO implement authentication for logged in user
-    @RequestMapping(value = "/authenticate", method ={RequestMethod.GET}, produces = "application/json")
-    public Boolean authenticate(){
+    //TODO implement authentication for logged in user
+    @RequestMapping(value = "/authenticate", method = {RequestMethod.GET}, produces = "application/json")
+    public Boolean authenticate() {
         return true;
 
     }
-//TODO implement logout method
-    @RequestMapping(value = "/logout", method =RequestMethod.GET, produces = "application/json")
-    public void logout(@RequestParam int userId){
+
+    //TODO implement logout method
+    @RequestMapping(value = "/logout", method = RequestMethod.GET, produces = "application/json")
+    public void logout(@RequestParam int userId) {
 
     }
 

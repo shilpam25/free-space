@@ -8,13 +8,17 @@ import java.util.Date;
 @Entity
 @Table(name ="blog")
 public class Blog {
+
+    public Blog(){
+
+    }
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name="blogId")
     private int blogId;
 
     @Column(name="userId")
-    private int userId;
+    private long userId;
 
     @Column(name="title")
     private String title;
@@ -49,11 +53,11 @@ public class Blog {
         this.title = title;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 

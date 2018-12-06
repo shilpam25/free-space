@@ -7,7 +7,7 @@ import java.io.Serializable;
 public class CommentReq implements Serializable {
 
     @NotBlank(message = "Comment should not be empty")
-    private String comment;
+    private String commentDes;
     @NotBlank(message = "BlogID should not be empty")
     private int blogId;
     @NotBlank(message = "UserId should not be empty")
@@ -30,10 +30,10 @@ public class CommentReq implements Serializable {
     }
 
     public String getComment() {
-        return comment;
+        return commentDes;
     }
 
     public void setComment(String comment) {
-        this.comment = comment;
+        this.commentDes = comment;
     }
 }
