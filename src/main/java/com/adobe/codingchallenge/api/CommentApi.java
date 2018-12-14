@@ -27,7 +27,6 @@ public class CommentApi {
     @RequestMapping(value = "/user/{userId}/comments", method ={RequestMethod.DELETE}, produces = "application/json")
     public void deleteAllCommentByUser(@PathVariable("userId") @NotNull String userId){
         commentService.deleteAllCommentByUser(Long.parseLong(userId));
-
     }
 
     @RequestMapping(value = "/blog/{blogId}/comments", method ={RequestMethod.DELETE}, produces = "application/json")
