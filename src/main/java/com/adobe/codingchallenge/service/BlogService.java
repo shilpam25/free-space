@@ -7,7 +7,7 @@ import com.adobe.codingchallenge.model.BlogRes;
 import java.util.List;
 
 public interface BlogService {
-    BlogRes saveBlog(BlogReq blog, int userId);
+    BlogRes saveBlog(BlogReq blog);
 
     List<BlogRes> getLatest10();
 
@@ -16,6 +16,6 @@ public interface BlogService {
     List<BlogRes> getBlogs();
     void deleteBlog(int blogId, long userId);
     BlogRes getBlogDetails(int blogId);
-    BlogRes getBlodDetailsbyUser(int blogId, long userId);
+    BlogRes getBlogDetailsbyUser(int blogId, long userId);
     List<BlogRes> getAllBlogByUser(long userId);
 }

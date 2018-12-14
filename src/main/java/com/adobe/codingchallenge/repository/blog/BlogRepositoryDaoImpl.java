@@ -22,14 +22,14 @@ public class BlogRepositoryDaoImpl implements BlogRepositoryDao {
     BlogRepository blogRepository;
 
     @Override
-    public BlogRes createBlog(BlogReq blog, long userId){
+    public BlogRes createBlog(BlogReq blog){
         Blog blogTemp = new Blog();
         blogTemp.setCretDt(new Date(System.currentTimeMillis()));
         blogTemp.setUpdtDt(new Date(System.currentTimeMillis()));
-        blogTemp.setInactvDt(new Date(System.currentTimeMillis()));
+        //blogTemp.setInactvDt(new Date(System.currentTimeMillis()));
         blogTemp.setTitle(blog.getTitle());
         blogTemp.setDesc(blog.getDesc());
-        blogTemp.setUserId(userId);
+        blogTemp.setUserId(blog.getUserId());
         Blog blogResult= blogRepository.save(blogTemp);
         if(blogResult !=null){
             return createBlogRes(blogResult);}
@@ -83,6 +83,7 @@ public class BlogRepositoryDaoImpl implements BlogRepositoryDao {
         return createBlogRes(blogResult);
     }
 
+
     @Override
     public List<BlogRes> findAllByUserId(long userId){
         List<Blog> blogList;
@@ -107,9 +108,6 @@ public class BlogRepositoryDaoImpl implements BlogRepositoryDao {
     private BlogRes createBlogRes(Blog blog){
         BlogRes blogRes = new BlogRes();
         blogRes.setBlogId(blog.getBlogId());
-        UserRes userRes= new UserRes();
-        userRes.setUserId(blog.getUserId());
-        blogRes.setUserRes(userRes);
         blogRes.setTitle(blog.getTitle());
         blogRes.setDesc(blog.getDesc());
         blogRes.setCretDt(blog.getCretDt());

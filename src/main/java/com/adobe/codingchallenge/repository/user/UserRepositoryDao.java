@@ -2,11 +2,11 @@ package com.adobe.codingchallenge.repository.user;
 
 import com.adobe.codingchallenge.model.User;
 import com.adobe.codingchallenge.model.UserReq;
-import com.adobe.codingchallenge.model.UserRes;
+import com.adobe.codingchallenge.model.UserDetails;
 
 public interface UserRepositoryDao {
-    UserRes createUser(UserReq usr);
-    UserRes findUser(UserReq usr);
-    UserRes getUserDetails(long userId);
+    UserDetails createUser(UserReq usr);
+    UserDetails findUser(UserReq usr);
+    UserDetails getUserDetails(long userId);
 
 }

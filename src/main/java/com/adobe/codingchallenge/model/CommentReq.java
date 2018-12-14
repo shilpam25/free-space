@@ -1,17 +1,20 @@
 package com.adobe.codingchallenge.model;
 
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
-import java.io.Serializable;
-
-public class CommentReq implements Serializable {
-
-    @NotBlank(message = "Comment should not be empty")
+public class CommentReq {
+    @NotNull(message = "Comment Description should not be empty")
     private String commentDes;
-    @NotBlank(message = "BlogID should not be empty")
     private int blogId;
-    @NotBlank(message = "UserId should not be empty")
-    private int userId;
+    private long userId;
+
+    public String getCommentDes() {
+        return commentDes;
+    }
+
+    public void setCommentDes(String commentDes) {
+        this.commentDes = commentDes;
+    }
 
     public int getBlogId() {
         return blogId;
@@ -21,19 +24,11 @@ public class CommentReq implements Serializable {
         this.blogId = blogId;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
-    }
-
-    public String getComment() {
-        return commentDes;
-    }
-
-    public void setComment(String comment) {
-        this.commentDes = comment;
     }
 }

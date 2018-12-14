@@ -1,12 +1,7 @@
 package com.adobe.codingchallenge.service;
 
-import com.adobe.codingchallenge.model.Blog;
-import com.adobe.codingchallenge.model.BlogReq;
-import com.adobe.codingchallenge.model.BlogRes;
-import com.adobe.codingchallenge.model.UserRes;
+import com.adobe.codingchallenge.model.*;
 import com.adobe.codingchallenge.repository.blog.BlogRepositoryDao;
-import com.adobe.codingchallenge.repository.user.UserRepository;
-import com.adobe.codingchallenge.repository.user.UserRepositoryDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,18 +9,18 @@ import java.util.List;
 
 @Component
 public class BlogServiceImpl implements BlogService {
+
     @Autowired
     BlogRepositoryDao blogRepositoryDao;
 
     @Autowired
-    UserRepositoryDao userRepositoryDao;
+    CommentService commentService;
 
     @Override
-    public BlogRes saveBlog(BlogReq blog, int userId) {
+    public BlogRes saveBlog(BlogReq blog) {
         BlogRes blogRes;
-        blogRes= blogRepositoryDao.createBlog(blog, userId);
-        return blogRes;
-    }
+        blogRes= blogRepositoryDao.createBlog(blog);
+        return blogRes; }
 
     @Override
     public void publishBlog(int blogId) {
@@ -39,35 +34,44 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public List<BlogRes> getBlogs() {
-        return blogRepositoryDao.retreiveAll(); //TODO send only latest 10 for landing page
-
+        return addCommentResListToBlogList(blogRepositoryDao.retreiveAll()); //TODO send only latest 10 for landing page
     }
 
     @Override
     public void deleteBlog(int blogId, long userId) {
+        commentService.deleteAllCommentByBlog(blogId);
         blogRepositoryDao.removeBlog(blogId, userId);
     }
+
     //TODO
     @Override
     public List<BlogRes> getLatest10(){
-
-     return null;
+        return null;
     }
+
     @Override
     public BlogRes getBlogDetails(int blogId){
         BlogRes blogRes = blogRepositoryDao.findBlogByBlogId(blogId);
-        long userId= blogRes.getUserRes().getUserId();
-        UserRes userRes= userRepositoryDao.getUserDetails(userId);
-        blogRes.setUserRes(userRes);
+        List<CommentDetails> commentDetailsList = commentService.retreiveAllByBlog(blogRes.getBlogId());
+        if( commentDetailsList.size() != 0){
+            blogRes.setCommentResList(commentDetailsList);}
         return blogRes;
     }
     @Override
-    public BlogRes getBlodDetailsbyUser(int blogId, long userId){
+    public BlogRes getBlogDetailsbyUser(int blogId, long userId){
         return null;
     }
     @Override
     public List<BlogRes> getAllBlogByUser(long userId){
-        return blogRepositoryDao.findAllByUserId(userId);
+        return addCommentResListToBlogList(blogRepositoryDao.findAllByUserId(userId)); //TODO send only latest 10 for landing page
+    }
 
+    private List<BlogRes> addCommentResListToBlogList(List<BlogRes> blogResList){
+        for (int i = 0; i<blogResList.size(); i++){
+            List<CommentDetails> commentDetailsList = commentService.retreiveAllByBlog(blogResList.get(i).getBlogId());
+            if( commentDetailsList.size() != 0){
+                blogResList.get(i).setCommentResList(commentDetailsList);}
+        }
+        return blogResList;
     }
 }

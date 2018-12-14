@@ -2,7 +2,7 @@ package com.adobe.codingchallenge.repository.user;
 
 import com.adobe.codingchallenge.model.User;
 import com.adobe.codingchallenge.model.UserReq;
-import com.adobe.codingchallenge.model.UserRes;
+import com.adobe.codingchallenge.model.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -17,25 +17,25 @@ public class UserRepositoryDaoImpl implements UserRepositoryDao{
     UserRepository userRepository;
 
     @Override
-    public UserRes createUser(UserReq usr){
+    public UserDetails createUser(UserReq usr){
         User user = new User();
         user.setCretDt(new Date(System.currentTimeMillis()));
         user.setPassword(usr.getPwd());
         user.setUserEmail(usr.getUserEmail());
-        User userResult = userRepository.save(user);
-        UserRes userRes = new UserRes();
-        userRes.setUserId(userResult.getUserId());
-        userRes.setUserEmail(userResult.getUserEmail());
-        return userRes;
+        User UserDetailsult = userRepository.save(user);
+        UserDetails UserDetails = new UserDetails();
+        UserDetails.setUserId(UserDetailsult.getUserId());
+        UserDetails.setUserEmail(UserDetailsult.getUserEmail());
+        return UserDetails;
     }
 
     @Override
-    public UserRes findUser(UserReq usr){
+    public UserDetails findUser(UserReq usr){
         List<User> user = userRepository.findUserByUserEmail(usr.getUserEmail());
         if (user.size()>0){
-            UserRes userRes = new UserRes();
-            userRes.setUserId(user.get(0).getUserId());
-            return userRes;
+            UserDetails UserDetails = new UserDetails();
+            UserDetails.setUserId(user.get(0).getUserId());
+            return UserDetails;
         }
         else{
            return null;
@@ -43,13 +43,13 @@ public class UserRepositoryDaoImpl implements UserRepositoryDao{
     }
 
     @Override
-    public UserRes getUserDetails(long userId){
-        UserRes userRes = new UserRes();
+    public UserDetails getUserDetails(long userId){
+        UserDetails UserDetails = new UserDetails();
         User user = userRepository.findUserByUserId(userId);
         if(user !=null){
-            userRes.setUserEmail(user.getUserEmail());
-            userRes.setUserId(user.getUserId());
-        return userRes;
+            UserDetails.setUserEmail(user.getUserEmail());
+            UserDetails.setUserId(user.getUserId());
+        return UserDetails;
         }
         return null;
     }

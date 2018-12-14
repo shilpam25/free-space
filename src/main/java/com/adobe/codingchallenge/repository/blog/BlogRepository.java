@@ -13,5 +13,4 @@ public interface BlogRepository extends CrudRepository<Blog, Long> {
     List<Blog> findAllByCretDtOrderByCretDtDesc(long userId);
 
 
-
 }

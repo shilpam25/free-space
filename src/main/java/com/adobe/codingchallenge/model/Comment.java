@@ -13,13 +13,14 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name="commentId")
-    private int commentId;
+    private long commentId;
 
     @Column(name="blogId")
-    private int blogId;
+    private long blogId;
 
     @Column(name="userId")
-    private int userId;
+    private long userId;
+
 
     @Column(name="comment_desc")
     private String commentDesc;
@@ -34,27 +35,27 @@ public class Comment {
     private Date inactvDt;
 
 
-    public int getCommentId() {
+    public long getCommentId() {
         return commentId;
     }
 
-    public void setCommentId(int commentId) {
+    public void setCommentId(long commentId) {
         this.commentId = commentId;
     }
 
-    public int getBlogId() {
+    public long getBlogId() {
         return blogId;
     }
 
-    public void setBlogId(int blogId) {
+    public void setBlogId(long blogId) {
         this.blogId = blogId;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 

@@ -1,49 +1,64 @@
 package com.adobe.codingchallenge.api;
 
-import com.adobe.codingchallenge.model.Comment;
+import com.adobe.codingchallenge.model.CommentDetails;
+import com.adobe.codingchallenge.model.CommentReq;
 import com.adobe.codingchallenge.model.CommentRes;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import com.adobe.codingchallenge.service.CommentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.websocket.server.PathParam;
+import java.util.List;
 
-@Controller
+@RestController
 public class CommentApi {
 
-    @RequestMapping(value = "/user/{userId}/blog/{blogId}", method ={RequestMethod.POST}, produces = "application/json")
-    public void postComment(@Valid @RequestBody Comment comment, @PathVariable("userId") @NotNull String userId, @PathVariable("blogId") @NotNull String blogId){
+    @Autowired
+    CommentService commentService;
 
+    @RequestMapping(value = "/user/blog", method ={RequestMethod.POST}, consumes = {"application/json"}, produces = {"application/json"})
+    public void postComment(@Valid @RequestBody CommentReq commentReq){
+        commentService.postComment(commentReq);
     }
 
-    @RequestMapping(value = "/comment/{userId}", method ={RequestMethod.DELETE}, produces = "application/json")
+    @RequestMapping(value = "/user/{userId}/comments", method ={RequestMethod.DELETE}, produces = "application/json")
     public void deleteAllCommentByUser(@PathVariable("userId") @NotNull String userId){
+        commentService.deleteAllCommentByUser(Long.parseLong(userId));
 
     }
 
-
-    @RequestMapping(value = "/comment/{blogId}", method ={RequestMethod.DELETE}, produces = "application/json")
-    public void deleteAllCommentByBlog(@PathVariable("blogId") @NotNull String blogId){
+    @RequestMapping(value = "/blog/{blogId}/comments", method ={RequestMethod.DELETE}, produces = "application/json")
+    public @ResponseBody void deleteAllCommentByBlog(@PathVariable("blogId") @NotNull String blogId){
+        commentService.deleteAllCommentByBlog(Long.parseLong(blogId));
 
     }
 
     @RequestMapping(value = "/user/{userId}/comment/{commentId}", method ={RequestMethod.DELETE}, produces = "application/json")
-    public void deleteCommentByUser(@PathVariable("userId") @NotNull String userId, @PathVariable("commentId") @NotNull String commentId){
-
+    public @ResponseBody void deleteCommentByUser(@PathVariable("userId") @NotNull String userId, @PathVariable("commentId") @NotNull String commentId){
+        commentService.deleteComment(Long.parseLong(commentId), Long.parseLong(userId));
     }
 
-    @RequestMapping(value = "/comment/{userId}", method ={RequestMethod.GET}, produces = "application/json")
-    public CommentRes getAllCommentByUser(@PathVariable("userId") @NotNull String userId){
-    return null;
+    @RequestMapping(value = "/user/{userId}/comments", method ={RequestMethod.GET}, produces = "application/json")
+    public @ResponseBody
+    CommentRes getAllCommentByUser(@PathVariable("userId") @NotNull String userId, Model model)
+
+    {
+        CommentRes commentRes = new CommentRes();
+
+        List<CommentDetails> commentDetailsList = commentService.retreiveAllByUser(Long.parseLong(userId));
+        //model.addAttribute("userComments", commentResList);
+        commentRes.setCommentDetailsList(commentDetailsList);
+        return commentRes;
     }
 
-    @RequestMapping(value = "/comment/{blogId}", method ={RequestMethod.GET}, produces = "application/json")
-    public CommentRes getAllCommentByBlog(@PathVariable("blogId") @NotNull String blogId){
-     return null;
+    @RequestMapping(value = "/blog/{blogId}/comments", method ={RequestMethod.GET}, produces = "application/json")
+    public @ResponseBody List<CommentDetails> getAllCommentByBlog(@PathVariable("blogId") @NotNull String blogId)
+    {
+     return commentService.retreiveAllByBlog(Long.parseLong(blogId));
     }
+
 
 }

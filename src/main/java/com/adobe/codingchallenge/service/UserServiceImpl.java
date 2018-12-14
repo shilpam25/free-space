@@ -1,7 +1,7 @@
 package com.adobe.codingchallenge.service;
 
 import com.adobe.codingchallenge.model.UserReq;
-import com.adobe.codingchallenge.model.UserRes;
+import com.adobe.codingchallenge.model.UserDetails;
 import com.adobe.codingchallenge.repository.user.UserRepositoryDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,41 +16,41 @@ public class UserServiceImpl implements UserService {
     UserRepositoryDao userRepositoryDao;
 
     @Override
-    public UserRes registerUser(UserReq user) {
+    public UserDetails registerUser(UserReq user) {
         if (userRepositoryDao.findUser(user) != null) {
             throw new IllegalArgumentException("User is already registered");
         }
-        UserRes userRes= userRepositoryDao.createUser(user);
-        return userRes;
+        UserDetails UserDetails= userRepositoryDao.createUser(user);
+        return UserDetails;
     }
 
     @Override
-    public UserRes getUserDetails(UserReq user) {
-        UserRes userRes;
+    public UserDetails getUserDetails(UserReq user) {
+        UserDetails UserDetails;
 
-        userRes = userRepositoryDao.findUser(user);
-        if (userRes == null)
+        UserDetails = userRepositoryDao.findUser(user);
+        if (UserDetails == null)
             throw new NoSuchElementException("User not found");
-        return userRes;
+        return UserDetails;
 
     }
 
     @Override
-    public UserRes getUserDetails(long userId) {
-        UserRes userRes;
+    public UserDetails getUserDetails(long userId) {
+        UserDetails UserDetails;
 
-        userRes = userRepositoryDao.getUserDetails(userId);
-        if (userRes == null)
+        UserDetails = userRepositoryDao.getUserDetails(userId);
+        if (UserDetails == null)
             throw new NoSuchElementException("User not found");
-        return userRes;
+        return UserDetails;
 
     }
 
     @Override
     public Boolean checkUserExists(UserReq user){
-        UserRes userRes;
-        userRes = userRepositoryDao.findUser(user);
-        if (userRes == null)
+        UserDetails UserDetails;
+        UserDetails = userRepositoryDao.findUser(user);
+        if (UserDetails == null)
             return false;
         return true;
     }

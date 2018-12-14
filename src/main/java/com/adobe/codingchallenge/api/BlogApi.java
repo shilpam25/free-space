@@ -2,64 +2,74 @@ package com.adobe.codingchallenge.api;
 
 import com.adobe.codingchallenge.model.BlogReq;
 import com.adobe.codingchallenge.model.BlogRes;
+import com.adobe.codingchallenge.model.GetBlogsRes;
 import com.adobe.codingchallenge.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.ui.Model;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.websocket.server.PathParam;
 import java.util.List;
 
-@RestController
-@RequestMapping("/api/v1")
+@Controller
 public class BlogApi {
 @Autowired
     BlogService blogService;
 
-    @RequestMapping(value = "/user/{userId}/save-blog", method ={RequestMethod.POST}, consumes = {"application/json",MediaType.APPLICATION_FORM_URLENCODED_VALUE}, produces = {"application/json", MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-    public BlogRes saveBlog(@PathVariable ("userId") @NotNull String userId, @RequestBody @Valid  BlogReq blog, Model model){
-        return blogService.saveBlog(blog, Integer.parseInt(userId));
 
+        @RequestMapping(value = "/user/save-blog", method ={RequestMethod.POST}, consumes = {"application/json"}, produces = {"application/json"})
+    public @ResponseBody  BlogRes saveBlog(@RequestBody @Valid  BlogReq blog){
+        BlogRes blogRes= blogService.saveBlog(blog);
+        //model.addAttribute("blogRes", blogRes);
+        //return "redirect:/";
+      return blogRes;
     }
 
     @RequestMapping(value = "/latest/blogs", method ={RequestMethod.GET}, produces = "application/json")
-    public List<BlogRes> getLatest10(){
-       return blogService.getBlogs();
+    public @ResponseBody GetBlogsRes getLatest10(){
+        GetBlogsRes getBlogsRes= new GetBlogsRes();
+        getBlogsRes.setBlogRes(blogService.getBlogs());
+
+
+       return getBlogsRes;
 
     }
 
 
-    @RequestMapping(value = "/user/publish-blog/{blogId}", method ={RequestMethod.POST}, produces = "application/json")
-    public BlogRes publishBlog(@PathVariable("blogId") @NotNull String blogId){
-        return null;
+    @RequestMapping(value = "/user/publish-blog/{blogId}", method ={RequestMethod.PUT}, produces = "application/json")
+    public String publishBlog(@PathVariable("blogId") @NotNull String blogId){
+        blogService.publishBlog(Integer.parseInt(blogId));
+        //model.addAttribute("blogPublished",true);
+        return "redirect:/";
 
     }
 
-    @RequestMapping(value = "/user/{userId}/blogs", method ={RequestMethod.GET}, produces = "application/json")
-    public List<BlogRes> getAllByUser(@PathVariable ("userId") @NotNull String userId){
-        return blogService.getAllBlogByUser(Integer.parseInt(userId));
 
+    @RequestMapping(value = "/blog/blogs", method ={RequestMethod.GET}, consumes = "application/json", produces = "application/json")
+    public @ResponseBody GetBlogsRes getAll(){
+        GetBlogsRes blogsRes = new GetBlogsRes();
+
+        List<BlogRes> blogResList=  blogService.getBlogs();
+        //model.addAttribute("blogList", blogResList);
+        blogsRes.setBlogRes(blogResList);
+        return blogsRes;
+        //return "redirect:/blog/blogtemplate";
     }
 
-    @RequestMapping(value = "/blogs", method ={RequestMethod.GET}, produces = "application/json")
-    public List<BlogRes> getAll(){
-        return blogService.getBlogs();
-
-    }
-
-    @RequestMapping(value = "/blog/{blogId}", method ={RequestMethod.GET}, consumes = {"application/json", MediaType.APPLICATION_FORM_URLENCODED_VALUE}, produces = {"application/json", MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-    public BlogRes getBlogDetails(@PathVariable("blogId") @NotNull String blogId, Model model){
+    @RequestMapping(value = "/blog/blogDetails/{blogId}", method ={RequestMethod.GET}, consumes = {"application/json"}, produces = {"application/json"})
+    public @ResponseBody BlogRes getBlogDetails(@PathVariable("blogId") String blogId){
         BlogRes blogRes = blogService.getBlogDetails(Integer.parseInt(blogId));
-        model.addAttribute("blogObject", blogRes);
-        return blogRes;
-
+       // model.addAttribute("blogObject", blogRes);
+        //return "blog/blogDetails";
+     return blogRes;
     }
 
     @RequestMapping(value = "/user/{userId}/blog/{blogId}", method ={RequestMethod.DELETE}, produces = "application/json")
-    public void removeUserBlog(@PathVariable("userId") @NotNull String userId, @RequestParam("blogId") @NotNull String blogId){
-        blogService.deleteBlog(Integer.parseInt(userId), Integer.parseInt(blogId));
+    public @ResponseBody void removeUserBlog(@PathVariable("userId") @NotNull String userId, @PathVariable("blogId") @NotNull String blogId){
+        blogService.deleteBlog(Integer.parseInt(blogId), Integer.parseInt(userId));
+        List<BlogRes> blogResList= blogService.getAllBlogByUser(Integer.parseInt(userId));
+        //model.addAttribute("blogList", blogResList);
+        //return "redirect:/";
     }
 }
