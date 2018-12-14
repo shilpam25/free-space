@@ -1,0 +1,29 @@
+{
+  "name": "free-space",
+  "version": "1.0.0",
+  "devDependencies": {
+    "bower": "1.4.1"
+  },
+  "description": "sample",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shilpam25/free-space"
+  },
+  "keywords": [
+    "free",
+    "space"
+  ],
+  "author": "Shilpa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shilpam25/free-space/issues"
+  },
+  "homepage": "https://github.com/shilpam25/free-space"
+}
